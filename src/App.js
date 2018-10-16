@@ -108,7 +108,7 @@ class App extends Component {
 
 
       <blockquote>
-    <p>  Temperature:  {this.state.temperature}</p>
+    <p>  Temperature:  {this.state.temperature-273} Degree celsius </p>
     <p>  Pressure:  {this.state.pressure}</p>
     <p>  Humidity:  {this.state.humidity}</p>
     <p>  Main:  {this.state.main}</p>
