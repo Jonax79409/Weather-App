@@ -5,7 +5,14 @@ import './App.css';
 import Alert from 'react-s-alert';
 
 import 'react-s-alert/dist/s-alert-default.css';
+const styles={
+  profile:{
+    width:30,
+    height:10,
+    margin:10
 
+  }
+}
 class App extends Component {
 
   constructor(props){ //Construction of a constructor to Initialize the values
@@ -17,16 +24,33 @@ class App extends Component {
           pressure:"",
           humidity:"",
           main:"",
-          description:""
+          description:"",
+          icon:""
 
         }
     }
 
-
+    async getIcon(){
+      var iconVal=this.state.icon
+        var url2='https://openweathermap.org/img/w/';
+      var res2P=  fetch(url2+iconVal+".png");
+      var res2=await res2P
+      if(res2.ok){
+        var json=await res2.json();
+      this.setState({
+        icon:json.weather[0].icon
+      })
+      return json;
+    }
+      else{
+        Alert.error('Test message 3');
+      }
+    }
     async getData(){
 
       var cityname= this.state.newMessage;
       var url='https://api.openweathermap.org/data/2.5/weather?q=';
+
       var appid="19e6ce13b161a02dff960c3624058dd0"
       var resP =  fetch(url+cityname+"&appid="+appid);
 
@@ -41,9 +65,11 @@ class App extends Component {
         pressure:json.main.pressure,
         humidity:json.main.humidity,
         main:json.weather[0].main,
-        description:json.weather[0].description
+        description:json.weather[0].description,
+
 
       })
+
       return json;}
       else{
         Alert.error('Test message 3');
@@ -57,7 +83,8 @@ class App extends Component {
         pressure:"",
         humidity:"",
         main:"",
-        description:""
+        description:"",
+        icon:""
       })
     }
 
@@ -99,7 +126,7 @@ class App extends Component {
 
           <Fragment>
           <button  class="btn waves-effect waves-light" type="submit" name="action" onClick={this.getData.bind(this)}> Submit</button>
-
+          <button class="btn waves-effect waves-light" type="submit" name="action" onClick={this.getIcon.bind(this)}> Show Icon<i class="material-icons right"></i></button>
           </Fragment>
 
         <button class="btn waves-effect waves-light" type="submit" name="action" onClick={this._handle2Click.bind(this)}> Another<i class="material-icons right"></i></button>
@@ -113,6 +140,7 @@ class App extends Component {
     <p>  Humidity:  {this.state.humidity}</p>
     <p>  Main:  {this.state.main}</p>
     <p>  Description:  {this.state.description}</p>
+    <p> icon:{this.state.icon}</p>
     </blockquote>
 
 
