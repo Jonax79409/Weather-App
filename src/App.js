@@ -7,8 +7,8 @@ import Alert from 'react-s-alert';
 import 'react-s-alert/dist/s-alert-default.css';
 const styles={
   profile:{
-    width:30,
-    height:10,
+    width:40,
+    height:30,
     margin:10
 
   }
@@ -31,20 +31,18 @@ class App extends Component {
     }
 
     async getIcon(){
-      var iconVal=this.state.icon
-        var url2='https://openweathermap.org/img/w/';
-      var res2P=  fetch(url2+iconVal+".png");
-      var res2=await res2P
-      if(res2.ok){
-        var json=await res2.json();
-      this.setState({
-        icon:json.weather[0].icon
-      })
-      return json;
-    }
-      else{
+      var iconVal=this.state.icon;
+      if(iconVal===""){
         Alert.error('Test message 3');
       }
+      else{
+        var url2='https://openweathermap.org/img/w/';
+        var url3=url2+iconVal+".png";
+        this.setState({
+          icon: url3
+        })
+      }
+      return url3
     }
     async getData(){
 
@@ -66,11 +64,13 @@ class App extends Component {
         humidity:json.main.humidity,
         main:json.weather[0].main,
         description:json.weather[0].description,
-
+        icon:json.weather[0].icon
 
       })
 
-      return json;}
+
+      return json;
+    }
       else{
         Alert.error('Test message 3');
       }
@@ -125,7 +125,8 @@ class App extends Component {
       <li>
 
           <Fragment>
-          <button  class="btn waves-effect waves-light" type="submit" name="action" onClick={this.getData.bind(this)}> Submit</button>
+          <button  class="btn waves-effect waves-light" type="submit" name="action" onClick={this.getData.bind(this)
+          }> Submit</button>
           <button class="btn waves-effect waves-light" type="submit" name="action" onClick={this.getIcon.bind(this)}> Show Icon<i class="material-icons right"></i></button>
           </Fragment>
 
@@ -140,7 +141,7 @@ class App extends Component {
     <p>  Humidity:  {this.state.humidity}</p>
     <p>  Main:  {this.state.main}</p>
     <p>  Description:  {this.state.description}</p>
-    <p> icon:{this.state.icon}</p>
+    <p> ICON:  <img style={styles.profile} src={this.state.icon}/></p>
     </blockquote>
 
 
