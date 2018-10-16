@@ -37,7 +37,7 @@ class App extends Component {
       //var json2= await res2.json();
 
       this.setState({
-        temperature:json.main.temp,
+        temperature:json.main.temp-273,
         pressure:json.main.pressure,
         humidity:json.main.humidity,
         main:json.weather[0].main,
@@ -108,7 +108,7 @@ class App extends Component {
 
 
       <blockquote>
-    <p>  Temperature:  {this.state.temperature-273} Degree celsius </p>
+    <p>  Temperature:  {this.state.temperature} Degree celsius </p>
     <p>  Pressure:  {this.state.pressure}</p>
     <p>  Humidity:  {this.state.humidity}</p>
     <p>  Main:  {this.state.main}</p>
