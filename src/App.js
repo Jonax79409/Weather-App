@@ -7,8 +7,8 @@ import Alert from 'react-s-alert';
 import 'react-s-alert/dist/s-alert-default.css';
 const styles={
   profile:{
-    width:40,
-    height:30,
+    width:100,
+    height:100,
     margin:10
 
   }
@@ -30,20 +30,7 @@ class App extends Component {
         }
     }
 
-    async getIcon(){
-      var iconVal=this.state.icon;
-      if(iconVal===""){
-        Alert.error('Test message 3');
-      }
-      else{
-        var url2='https://openweathermap.org/img/w/';
-        var url3=url2+iconVal+".png";
-        this.setState({
-          icon: url3
-        })
-      }
-      return url3
-    }
+
     async getData(){
 
       var cityname= this.state.newMessage;
@@ -67,8 +54,12 @@ class App extends Component {
         icon:json.weather[0].icon
 
       })
-
-
+      var iconVal=this.state.icon;
+      var url2='https://openweathermap.org/img/w/';
+      var url3=url2+iconVal+".png";
+      this.setState({
+        icon: url3
+      })
       return json;
     }
       else{
@@ -127,9 +118,8 @@ class App extends Component {
           <Fragment>
           <button  class="btn waves-effect waves-light" type="submit" name="action" onClick={this.getData.bind(this)
           }> Submit</button>
-          <button class="btn waves-effect waves-light" type="submit" name="action" onClick={this.getIcon.bind(this)}> Show Icon<i class="material-icons right"></i></button>
-          </Fragment>
 
+          </Fragment>
         <button class="btn waves-effect waves-light" type="submit" name="action" onClick={this._handle2Click.bind(this)}> Another<i class="material-icons right"></i></button>
       </li>
       </ul>
@@ -141,7 +131,7 @@ class App extends Component {
     <p>  Humidity:  {this.state.humidity}</p>
     <p>  Main:  {this.state.main}</p>
     <p>  Description:  {this.state.description}</p>
-    <p> ICON:  <img style={styles.profile} src={this.state.icon}/></p>
+    <p> <img style={styles.profile} src={this.state.icon} onError={(e)=>{e.target.onerror = null; e.target.src="https://www.google.co.in/url?sa=i&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwiokLfr7oveAhWIqo8KHVhmANgQjRx6BAgBEAU&url=https%3A%2F%2Fwww.washingtonpost.com%2Fnews%2Fcapital-weather-gang%2Fwp%2F2018%2F05%2F08%2Fd-c-area-forecast-nice-weather-week-continues-things-could-get-hot-this-weekend%2F&psig=AOvVaw0vgQ85V9csmgVFpnmFyp7L&ust=1539810380663284"}}/></p>
     </blockquote>
 
 
